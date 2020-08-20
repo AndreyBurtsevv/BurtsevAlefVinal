@@ -14,6 +14,7 @@ using Microsoft.Extensions.Logging;
 using DataService;
 using DataService.DataModels;
 using Microsoft.OpenApi.Models;
+using AlefVinalServices.Services;
 
 namespace Alef_Vinal
 {
@@ -34,6 +35,7 @@ namespace Alef_Vinal
             var cs = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<ValuesDbContext>(options => options.UseSqlServer(cs));
 
+            services.AddTransient<IValueService, ValueService>();
 
             services.AddSwaggerGen(c =>
             {
