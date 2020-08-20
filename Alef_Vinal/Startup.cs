@@ -13,6 +13,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using DataService;
 using DataService.DataModels;
+using Microsoft.OpenApi.Models;
 
 namespace Alef_Vinal
 {
@@ -31,8 +32,13 @@ namespace Alef_Vinal
             services.AddControllers();
 
             var cs = Configuration.GetConnectionString("DefaultConnection");
-            services.AddDbContext<ValuesDbContext>(options => options.UseSqlServer(cs)); 
+            services.AddDbContext<ValuesDbContext>(options => options.UseSqlServer(cs));
 
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Brand project", Version = "v1" });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -42,6 +48,12 @@ namespace Alef_Vinal
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Alef Vinal");
+            });
 
             app.UseHttpsRedirection();
 
