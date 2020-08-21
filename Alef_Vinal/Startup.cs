@@ -66,6 +66,10 @@ namespace Alef_Vinal
 
             app.UseHttpsRedirection();
 
+            app.UseDefaultFiles();
+
+            app.UseStaticFiles();
+
             app.UseRouting();
 
             app.UseAuthorization();
