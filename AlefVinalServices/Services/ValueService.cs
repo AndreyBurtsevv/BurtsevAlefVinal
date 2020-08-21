@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using AlefVinalServices.Validation;
+using AutoMapper;
 using DataService;
 using DataService.DataModels;
 using Microsoft.AspNetCore.JsonPatch;
@@ -17,18 +18,22 @@ namespace AlefVinalServices.Services
 
         private readonly IMapper _mapper;
 
-        public ValueService(ValuesDbContext db, IMapper mapper)
+        private readonly ValueValidator _validations;
+
+        public ValueService(ValuesDbContext db, IMapper mapper, ValueValidator validations)
         {
             _db = db;
             _mapper = mapper;
+            _validations = validations;
         }
 
         public async Task CreateAsync(Value value)
         {
-            if (value == null)
+            if (!ValidateValue(value))
             {
                 return;
             }
+
             DBValue result = _mapper.Map<DBValue>(value);
             _db.Values.Add(result);
             await _db.SaveChangesAsync();
@@ -52,16 +57,17 @@ namespace AlefVinalServices.Services
 
         public async Task UpdateAsync(Value value)
         {
-            if (value == null)
-            {
-                return;
-            }
-            if (!_db.Values.Any(x => x.Id == value.Id))
+            if (!ValidateValue(value))
             {
                 return;
             }
 
-            _db.Update(value);
+            if (!_db.Values.Any(x => x.Id == value.Id))
+            {
+                return;
+            }
+            DBValue result = _mapper.Map<DBValue>(value);
+            _db.Update(result);
             await _db.SaveChangesAsync();
         }
 
@@ -76,6 +82,22 @@ namespace AlefVinalServices.Services
             _db.Values.Remove(value);
             await _db.SaveChangesAsync();
             return result;
+        }
+
+        private bool ValidateValue(Value value)
+        {
+            var result = _validations.Validate(value);
+
+            if (result.IsValid)
+            {
+                return true;
+            }
+
+            foreach (var error in result.Errors)
+            {
+                Console.WriteLine(error.ErrorMessage);
+            }
+            return false;
         }
     }
 }

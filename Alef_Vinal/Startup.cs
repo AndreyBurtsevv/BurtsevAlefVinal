@@ -17,6 +17,7 @@ using Microsoft.OpenApi.Models;
 using AlefVinalServices.Services;
 using AutoMapper;
 using AlefVinalServices.Mappers;
+using AlefVinalServices.Validation;
 
 namespace Alef_Vinal
 {
@@ -40,6 +41,8 @@ namespace Alef_Vinal
             services.AddAutoMapper(typeof(MappingEntity));
 
             services.AddTransient<IValueService, ValueService>();
+
+            services.AddTransient<ValueValidator>();
 
             services.AddSwaggerGen(c =>
             {
