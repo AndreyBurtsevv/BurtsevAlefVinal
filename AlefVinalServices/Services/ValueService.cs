@@ -2,6 +2,7 @@
 using AutoMapper;
 using DataService;
 using DataService.DataModels;
+using DataService.Models;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.EntityFrameworkCore;
 using System;

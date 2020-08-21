@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AlefVinalServices.Services;
 using DataService;
 using DataService.DataModels;
+using DataService.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using DataService;
 using DataService.DataModels;
+using DataService.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
