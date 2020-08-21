@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using DataService.Configurators;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,12 +14,11 @@ namespace DataService.DataModels
         public ValuesDbContext(DbContextOptions<ValuesDbContext> options) : base(options)
         {
             Database.EnsureCreated();
-            if (!Values.Any())
-            {
-                Values.Add(new DBValue { Name = "Bilain", Description = "091" });
-                Values.Add(new DBValue { Name = "MTS", Description = "068" });
-                SaveChanges();
-            }
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.ApplyConfiguration(new ValueConfigurator());
         }
     }
 }
