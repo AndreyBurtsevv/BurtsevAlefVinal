@@ -15,6 +15,8 @@ using DataService;
 using DataService.DataModels;
 using Microsoft.OpenApi.Models;
 using AlefVinalServices.Services;
+using AutoMapper;
+using AlefVinalServices.Mappers;
 
 namespace Alef_Vinal
 {
@@ -34,6 +36,8 @@ namespace Alef_Vinal
 
             var cs = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<ValuesDbContext>(options => options.UseSqlServer(cs));
+
+            services.AddAutoMapper(typeof(MappingEntity));
 
             services.AddTransient<IValueService, ValueService>();
 

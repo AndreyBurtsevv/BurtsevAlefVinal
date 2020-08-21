@@ -1,4 +1,5 @@
-﻿using DataService;
+﻿using AutoMapper;
+using DataService;
 using DataService.DataModels;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.EntityFrameworkCore;
@@ -14,9 +15,12 @@ namespace AlefVinalServices.Services
     {
         private readonly ValuesDbContext _db;
 
-        public ValueService(ValuesDbContext db)
+        private readonly IMapper _mapper;
+
+        public ValueService(ValuesDbContext db, IMapper mapper)
         {
             _db = db;
+            _mapper = mapper;
         }
 
         public async Task CreateAsync(Value value)
@@ -25,22 +29,25 @@ namespace AlefVinalServices.Services
             {
                 return;
             }
-
-            _db.Values.Add(value);
+            DBValue result = _mapper.Map<DBValue>(value);
+            _db.Values.Add(result);
             await _db.SaveChangesAsync();
         }
 
         public async Task<Value> GetAsync(int id)
         {
-            Value value = await _db.Values.FirstOrDefaultAsync(x => x.Id == id);
+            DBValue value = await _db.Values.FirstOrDefaultAsync(x => x.Id == id);
+            Value result = _mapper.Map<Value>(value);
             if (value == null)
                 return null;
-            return value;
+            return result;
         }
 
         public async Task<IEnumerable<Value>> GetAllAsync()
         {
-            return await _db.Values.ToListAsync();
+            var list = await _db.Values.ToListAsync();
+                 
+            return _mapper.Map<IEnumerable<DBValue>, IEnumerable<Value>>(list).ToList();
         }
 
         public async Task UpdateAsync(Value value)
@@ -60,14 +67,15 @@ namespace AlefVinalServices.Services
 
         public async Task<Value> DeleteAsync(int id)
         {
-            Value value = _db.Values.FirstOrDefault(x => x.Id == id);
+            DBValue value = _db.Values.FirstOrDefault(x => x.Id == id);
+            Value result = _mapper.Map<Value>(value);
             if (value == null)
             {
                 return null;
             }
             _db.Values.Remove(value);
             await _db.SaveChangesAsync();
-            return value;
+            return result;
         }
     }
 }
