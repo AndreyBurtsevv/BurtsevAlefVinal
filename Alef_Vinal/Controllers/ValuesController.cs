@@ -12,7 +12,8 @@ using Microsoft.EntityFrameworkCore;
 namespace Alef_Vinal.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    //[Route("[controller]")]
+    [Route("api/[controller]")]
     public class ValuesController : ControllerBase
     {
         private readonly IValueService service;

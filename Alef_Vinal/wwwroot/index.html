@@ -1,0 +1,187 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>List of objects</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.0/css/bootstrap.min.css" rel="stylesheet" /> 
+</head>
+<body>
+    <h2>List of objects</h2>
+    <form name="createForm">
+        <div class="form-group col-md-5">
+            <label for="name">Name:</label>
+            <input class="form-control" name="name" />
+        </div>
+
+        <div class="form-group col-md-5">
+            <label for="description">Description:</label>
+            <input class="form-control" name="description" type="number" />
+        </div>
+
+        <div class="panel-body">
+            <button type="submit" id="submit" class="btn btn-primary">Создать</button>
+        </div>
+    </form>
+
+    <form name="editForm">
+
+        <div class="form-group col-md-5">
+            <label for="valueId">Id:</label>
+            <input class="form-control" name="valueId" type="number" readonly />
+        </div>
+
+        <div class="form-group col-md-5">
+            <label for="name">Name:</label>
+            <input class="form-control" name="name" />
+        </div>
+
+        <div class="form-group col-md-5">
+            <label for="description">Description:</label>
+            <input class="form-control" name="description" type="number" />
+        </div>
+
+        <div class="panel-body">
+            <button type="submit" id="submit" class="btn btn-primary">Изменить</button>
+        </div>
+    </form>
+
+    <table class="table table-condensed table-striped  col-md-6">
+        <thead><tr><th>Id</th><th>Name</th><th>Description</th><th></th></tr></thead>
+        <tbody>
+        </tbody>
+    </table>
+    <script src="js/JavaScript.js"></script>
+    <!--<script>
+        // Получение всех пользователей
+        async function GetAllValues() {
+            // отправляет запрос и получаем ответ
+            const response = await fetch("/api/values", {
+                method: "GET",
+                headers: { "Accept": "application/json" }
+            });
+            // если запрос прошел нормально
+            if (response.ok === true) {
+                // получаем данные
+                const values = await response.json();
+                let rows = document.querySelector("tbody");
+                values.forEach(value => {
+                    // добавляем полученные элементы в таблицу
+                    rows.append(row(value));
+                });
+            }
+        }
+
+        // Получение одного пользователя
+        async function GetOneValue(id) {
+            const response = await fetch("/api/values/" + id, {
+                method: "GET",
+                headers: { "Accept": "application/json" }
+            });
+            if (response.ok === true) {
+                const value = await response.json();
+                const form = document.forms["editForm"];
+                form.elements["valueId"].value = value.id;
+                form.elements["name"].value = value.name;
+                form.elements["description"].value = value.description;
+            }
+        }
+
+        // Добавление пользователя
+        async function CreateValue(valueName, valueDesc) {
+            const response = await fetch("api/values", {
+                method: "POST",
+                headers: { "Accept": "application/json", "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    name: valueName,
+                    description: valueDesc
+                })
+            });
+            if (response.ok === true) {
+                const value = await response.json();
+                reset();
+                document.querySelector("tbody").append(row(value));
+            }
+        }
+
+        // Изменение пользователя
+        async function EditValue(valueId, valueName, valueDesc) {
+            const response = await fetch("api/values", {
+                method: "PUT",
+                headers: { "Accept": "application/json", "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    id: parseInt(valueId, 10),
+                    name: valueName,
+                    description: valueDesc
+                })
+            });
+            if (response.ok === true) {
+                const value = await response.json();
+                reset();
+                document.querySelector("tr[data-rowid='" + value.id + "']").replaceWith(row(value));
+            }
+        }
+
+        // создание строки для таблицы
+        function row(value) {
+
+            const tr = document.createElement("tr");
+            tr.setAttribute("data-rowid", value.id);
+
+            const idTd = document.createElement("td");
+            idTd.append(value.id);
+            tr.append(idTd);
+
+            const nameTd = document.createElement("td");
+            nameTd.append(value.name);
+            tr.append(nameTd);
+
+            const descTd = document.createElement("td");
+            descTd.append(value.description);
+            tr.append(descTd);
+
+            const linksTd = document.createElement("td");
+
+            const editLink = document.createElement("a");
+            editLink.setAttribute("data-id", value.id);
+            editLink.setAttribute("style", "cursor:pointer;padding:15px;");
+            editLink.append("Изменить");
+            editLink.addEventListener("click", e => {
+
+                e.preventDefault();
+                GetOneValue(value.id);
+            });
+            linksTd.append(editLink);
+
+
+            tr.appendChild(linksTd);
+
+            return tr;
+        }
+
+        // отправка формы
+        document.forms["createForm"].addEventListener("submit", e => {
+            e.preventDefault();
+            const form = document.forms["createForm"];
+            const name = form.elements["name"].value;
+            const description = form.elements["description"].value;
+            CreateValue(name, description);
+        });
+
+        // отправка формы
+        document.forms["editForm"].addEventListener("submit", e => {
+            e.preventDefault();
+            const form = document.forms["editForm"];      
+            const _id = form.elements["valueId"].value;
+            const name = form.elements["name"].value;
+            const description = form.elements["description"].value;
+            
+            EditValue(_id, name, description);
+        });
+
+        // загрузка пользователей
+        GetAllValues();
+
+    </script>-->
+</body>
+</html>
