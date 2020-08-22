@@ -1,0 +1,9 @@
+﻿body {
+    background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSYVqYKNaVVP3-SAL_v1vOetHunTnnranFENA&usqp=CAU');
+    background-size: 100%;     
+    margin-left: 15%; /* Отступ слева */
+}
+
+h1,h2,h3,h4 {
+    text-align: center
+}
