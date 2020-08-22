@@ -13,7 +13,7 @@ namespace Alef_Vinal.Controllers
 {
     [ApiController]
     //[Route("[controller]")]
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     public class ValuesController : ControllerBase
     {
         private readonly IValueService service;

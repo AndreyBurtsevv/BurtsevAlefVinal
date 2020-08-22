@@ -1,7 +1,7 @@
 ﻿// Получение всех пользователей
 async function GetAllValues() {
     // отправляет запрос и получаем ответ
-    const response = await fetch("/api/values", {
+    const response = await fetch("/values", {
         method: "GET",
         headers: { "Accept": "application/json" }
     });
@@ -19,7 +19,7 @@ async function GetAllValues() {
 
 // Получение одного пользователя
 async function GetOneValue(id) {
-    const response = await fetch("/api/values/" + id, {
+    const response = await fetch("/values/" + id, {
         method: "GET",
         headers: { "Accept": "application/json" }
     });
@@ -34,7 +34,7 @@ async function GetOneValue(id) {
 
 // Добавление пользователя
 async function CreateValue(valueName, valueDesc) {
-    const response = await fetch("api/values", {
+    const response = await fetch("values", {
         method: "POST",
         headers: { "Accept": "application/json", "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -51,7 +51,7 @@ async function CreateValue(valueName, valueDesc) {
 
 // Изменение пользователя
 async function EditValue(valueId, valueName, valueDesc) {
-    const response = await fetch("api/values", {
+    const response = await fetch("values", {
         method: "PUT",
         headers: { "Accept": "application/json", "Content-Type": "application/json" },
         body: JSON.stringify({
