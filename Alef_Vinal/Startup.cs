@@ -64,22 +64,15 @@ namespace Alef_Vinal
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Alef Vinal");
             });
 
-            //app.UseHttpsRedirection();
-
-            //app.UseDefaultFiles();
-
-            //app.UseStaticFiles();
-
-            //app.UseRouting();
-
-            //app.UseAuthorization();
-
             app.UseDefaultFiles();
+
             app.UseStaticFiles();
 
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCookiePolicy();
 
             app.UseAuthorization();
 

@@ -33,49 +33,60 @@ namespace Alef_Vinal.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Value>> Get(int id)
         {
-            Value value = await service.GetAsync(id);
-            if (value == null)
-                return NotFound();
-            return new ObjectResult(value);
+            try
+            {
+                Value value = await service.GetAsync(id);
+                return new ObjectResult(value);
+            }
+            catch (Exception ex)
+            {
+                return NotFound(ex);
+            }            
         }
 
         // POST
         [HttpPost]
         public async Task<ActionResult<Value>> Post(Value value)
         {
-            if (value == null)
-            {
-                return BadRequest();
+            try
+            {                
+                await service.CreateAsync(value);
+                return Ok(value);
             }
-
-            await service.CreateAsync(value);
-            return Ok(value);
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }  
         }
 
         // PUT
         [HttpPut]
         public async Task<ActionResult<Value>> Put(Value value)
         {
-            if (value == null)
+            try
             {
-                return BadRequest();
+                await service.UpdateAsync(value);
+                return Ok(value);
             }
-
-            await service.UpdateAsync(value);
-            return Ok(value);
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }            
         }
 
         // DELETE
         [HttpDelete("{id}")]
         public async Task<ActionResult<Value>> Delete(int id)
         {
-            Value result = await service.DeleteAsync(id);
-            if (result == null)
+            try
             {
-                return NotFound();
+                Value result = await service.DeleteAsync(id);
+                return Ok(result);
             }
-            
-            return Ok(result);
+            catch (Exception ex)
+            {
+                return NotFound(ex);
+            }           
         }
     }
 }

@@ -7,3 +7,26 @@
 h1,h2,h3,h4 {
     text-align: center
 }
+
+table {
+    width: 100%;
+}
+
+td, th {
+    width: 25%;
+    height: 50px;
+    text-align: center;
+}
+
+th {
+    background-color: #4f81bd;
+    color: #fff;
+}
+
+tr:nth-of-type(even) {
+    background-color: #d0d8e8;
+}
+
+tr:nth-of-type(odd) {
+    background-color: #e9edf4;
+}

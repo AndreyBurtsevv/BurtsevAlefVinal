@@ -32,7 +32,7 @@ namespace AlefVinalServices.Services
         {
             if (!ValidateValue(value))
             {
-                return;
+                throw new ArgumentException(_validations.Validate(value).Errors.First().ErrorMessage);
             }
 
             DBValue result = _mapper.Map<DBValue>(value);
@@ -42,6 +42,11 @@ namespace AlefVinalServices.Services
 
         public async Task<Value> GetAsync(int id)
         {
+            if (id <= 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(id), "Error! ID is less than zero.");
+            }
+
             DBValue value = await _db.Values.FirstOrDefaultAsync(x => x.Id == id);
             Value result = _mapper.Map<Value>(value);
             if (value == null)
@@ -60,12 +65,12 @@ namespace AlefVinalServices.Services
         {
             if (!ValidateValue(value))
             {
-                return;
+                throw new ArgumentException(_validations.Validate(value).Errors.First().ErrorMessage);
             }
 
             if (!_db.Values.Any(x => x.Id == value.Id))
             {
-                return;
+                throw new ArgumentOutOfRangeException(nameof(value.Id), "Error! No object with this ID");
             }
             DBValue result = _mapper.Map<DBValue>(value);
             _db.Update(result);
@@ -74,12 +79,19 @@ namespace AlefVinalServices.Services
 
         public async Task<Value> DeleteAsync(int id)
         {
+            if (id <= 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(id), "Error! ID is less than zero.");
+            }
+
             DBValue value = _db.Values.FirstOrDefault(x => x.Id == id);
             Value result = _mapper.Map<Value>(value);
+
             if (value == null)
             {
-                return null;
+                throw new ArgumentException("Error! No object with this ID");
             }
+
             _db.Values.Remove(value);
             await _db.SaveChangesAsync();
             return result;
