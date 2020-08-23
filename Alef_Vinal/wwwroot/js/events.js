@@ -1,23 +1,18 @@
-﻿// Получение всех пользователей
+﻿
 async function GetAllValues() {
-    // отправляет запрос и получаем ответ
     const response = await fetch("/values", {
         method: "GET",
         headers: { "Accept": "application/json" }
     });
-    // если запрос прошел нормально
     if (response.ok === true) {
-        // получаем данные
         const values = await response.json();
         let rows = document.querySelector("tbody");
         values.forEach(value => {
-            // добавляем полученные элементы в таблицу
             rows.append(row(value));
         });
     }
 }
 
-// Получение одного пользователя
 async function GetOneValue(id) {
     const response = await fetch("/values/" + id, {
         method: "GET",
@@ -32,7 +27,6 @@ async function GetOneValue(id) {
     }
 }
 
-// Добавление пользователя
 async function CreateValue(valueName, valueDesc) {
     const response = await fetch("values", {
         method: "POST",
@@ -43,13 +37,12 @@ async function CreateValue(valueName, valueDesc) {
         })
     });
     if (response.ok === true) {
-        const value = await response.json();
-        reset();
+        const value = await response.json(); 
         document.querySelector("tbody").append(row(value));
+        location.reload()
     }
 }
 
-// Изменение пользователя
 async function EditValue(valueId, valueName, valueDesc) {
     const response = await fetch("values", {
         method: "PUT",
@@ -62,12 +55,10 @@ async function EditValue(valueId, valueName, valueDesc) {
     });
     if (response.ok === true) {
         const value = await response.json();
-        reset();
-        document.querySelector("tr[data-rowid='" + value.id + "']").replaceWith(row(value));
+        document.querySelector("tr[data-rowid='" + value.id + "']").replaceWith(row(value));        
     }
 }
 
-// создание строки для таблицы
 function row(value) {
 
     const tr = document.createElement("tr");
@@ -104,7 +95,6 @@ function row(value) {
     return tr;
 }
 
-// отправка формы
 document.forms["createForm"].addEventListener("submit", e => {
     e.preventDefault();
     const form = document.forms["createForm"];
@@ -113,7 +103,6 @@ document.forms["createForm"].addEventListener("submit", e => {
     CreateValue(name, description);
 });
 
-// отправка формы
 document.forms["editForm"].addEventListener("submit", e => {
     e.preventDefault();
     const form = document.forms["editForm"];
@@ -124,5 +113,4 @@ document.forms["editForm"].addEventListener("submit", e => {
     EditValue(_id, name, description);
 });
 
-// загрузка пользователей
 GetAllValues();

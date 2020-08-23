@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AlefVinalServices.Filters;
 using AlefVinalServices.Services;
 using DataService;
 using DataService.DataModels;
@@ -12,7 +13,6 @@ using Microsoft.EntityFrameworkCore;
 namespace Alef_Vinal.Controllers
 {
     [ApiController]
-    //[Route("[controller]")]
     [Route("[controller]")]
     public class ValuesController : ControllerBase
     {
@@ -60,9 +60,11 @@ namespace Alef_Vinal.Controllers
         }
 
         // PUT
-        [HttpPut]
+        //[Route("{id}")]
+        [IdFilter]
+        [HttpPut]  
         public async Task<ActionResult<Value>> Put(Value value)
-        {
+        { 
             try
             {
                 await service.UpdateAsync(value);

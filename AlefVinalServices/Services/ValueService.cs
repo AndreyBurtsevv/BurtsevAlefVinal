@@ -42,7 +42,7 @@ namespace AlefVinalServices.Services
 
         public async Task<Value> GetAsync(int id)
         {
-            if (id <= 0)
+            if (id < 0)
             {
                 throw new ArgumentOutOfRangeException(nameof(id), "Error! ID is less than zero.");
             }
@@ -79,7 +79,7 @@ namespace AlefVinalServices.Services
 
         public async Task<Value> DeleteAsync(int id)
         {
-            if (id <= 0)
+            if (id < 0)
             {
                 throw new ArgumentOutOfRangeException(nameof(id), "Error! ID is less than zero.");
             }
