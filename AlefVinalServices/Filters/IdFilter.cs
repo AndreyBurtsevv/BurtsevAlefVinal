@@ -12,14 +12,21 @@ namespace AlefVinalServices.Filters
     public class IdFilter : ResultFilterAttribute
     {
         public override void OnResultExecuting(ResultExecutingContext context)
-        {           
-            var result = context.Result;
-         
+        {
+            // REMARK! : Get value id
+            //1)
+            //var routeData = context.RouteData.Values;
+            //var id = routeData["id"];
+            //2)
+            //var id_2 = context.Result;
+            //3)
+            //var routeData = context.RouteData.DataTokens;
+
             CookieOptions cookie = new CookieOptions
             {
                 Expires = DateTime.Now.AddMinutes(1)
             };
-            context.HttpContext.Response.Cookies.Append("ValueId", "2", cookie);
+            context.HttpContext.Response.Cookies.Append("ValueId", "id", cookie);
         }
     }
 }
