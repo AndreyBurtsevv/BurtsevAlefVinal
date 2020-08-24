@@ -60,7 +60,6 @@ namespace Alef_Vinal.Controllers
         }
 
         // PUT
-        //[Route("{id}")]
         [IdFilter]
         [HttpPut]  
         public async Task<ActionResult<Value>> Put(Value value)
